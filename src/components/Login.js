@@ -19,21 +19,19 @@ class Login extends Component {
 		AuthService.loggedIn()
         .then((data) => {
             this.setState({
-              loggedIn: data === 'true'
+              loggedIn: data.loggedIn
             }); 
          });
 	}
 
 	login(event) {
 		event.preventDefault();
-
-      	const self = this;
-      	const username = self.refs.username.value;
-      	const password = self.refs.password.value;
+      	const username = this.refs.username.value;
+      	const password = this.refs.password.value;
 
 		AuthService.login(username, password)
 			.then(() => {
-				self.props.router.replace('/');
+				this.props.router.replace('/');
 			}).catch((error) => {
 				this.setState({
 					error: true

@@ -5,17 +5,9 @@ module.exports = {
 		const sendData = {
 			method: 'POST', 
 			credentials: 'include',
-	        body: article//JSON.stringify(article)
+	        body: article
 		};
 
-		return new Promise((resolve, reject) => {
-			fetch(`${config.apiUrl}articles`, sendData)
-			.then((response) => {
-				resolve();
-			})
-			.catch((error) => {
-				reject(error);
-			});
-		});
+		return fetch(`${config.apiUrl}articles`, sendData);
 	}
 };

@@ -18,14 +18,14 @@ class Articles extends Component {
             .then((response) => response.json())
             .then((articles) => {
                 this.setState({
-                    articles: articles
+                    articles
                 });
             });
 
         AuthService.loggedIn()
         .then((data) => {
             this.setState({
-              loggedIn: data === 'true'
+              loggedIn: data.loggedIn
             }); 
          })
     }
@@ -48,7 +48,7 @@ class Articles extends Component {
                 <h2 className="article-list__item__title">{article.title}</h2>
                  <p className="article-list__item__description">{article.description}</p>
                       <a className="link article-list__item__link" href={article.link}>Read more...</a>
-                      <img className="article-list__item__image" src={"http://localhost:3001/uploads/"+article.imageHash} alt='alt' />
+                      <img className="article-list__item__image" src={article.imageUrl} alt='alt' />
                       <div className="article-list__item__additional-information">
                           <span className="article-list__item__author">
                               <i className="icon icon-user"></i>

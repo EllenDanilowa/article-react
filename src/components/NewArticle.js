@@ -19,7 +19,7 @@ class NewArticle extends Component {
 		AuthService.loggedIn()
         .then((data) => {
             this.setState({
-              loggedIn: data === 'true'
+              loggedIn: data.loggedIn
             }); 
          });
 	}
@@ -32,8 +32,8 @@ class NewArticle extends Component {
 		ArticleService.addArticle(article)
 			.then(()=> {
 				this.props.router.replace('/');
-			}).catch(() => {
-
+			}).catch((error) => {
+				console.log(error);
 			});
 	}
 

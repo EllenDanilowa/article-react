@@ -12,18 +12,7 @@ module.exports = {
 		        body: JSON.stringify({ username: username, password: password})
 			};
 
-		return new Promise((resolve, reject) => {
-			fetch(`${config.apiUrl}login`, sendData)
-				.then((response) => {
-					if(response.status === 200) {
-						resolve();
-					} else {
-						throw new Error();
-					}
-				}).catch((error) => {
-					reject(error);
-				});
-		});
+		return fetch(`${config.apiUrl}login`, sendData);
 	},
 
 	logout() {
@@ -74,9 +63,7 @@ module.exports = {
 		return fetch(`${config.apiUrl}loggedIn`, {
 			credentials: 'include'
 		})
-			.then((response) => {
-				return response.text();
-			}).then(data => data)
+			.then((response) => response.json())
 			.catch((error) => {
 				return error;
 			});

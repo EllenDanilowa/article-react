@@ -16,16 +16,15 @@ class Registration extends Component {
 	register(event) {
 		event.preventDefault();
 
-		const self = this;
-      	const username = self.refs.username.value;
-      	const password = self.refs.password.value;
+      	const username = this.refs.username.value;
+      	const password = this.refs.password.value;
 
 		AuthService.register(username, password)
 			.then(() => {
-				self.props.router.replace('/login')
+				this.props.router.replace('/login')
 			})
 			.catch((error) => {
-				self.setState({
+				this.setState({
 					error: true
 				})
 			});
