@@ -2,15 +2,10 @@ import config from '../configs/config.json';
 
 module.exports = {
 	addArticle(article) {
-		var formData  = new FormData();
-
-		for(const key in article) {
-		    formData.append(key, article[key]);
-		}
-
 		const sendData = {
 			method: 'POST', 
-	        body: formData
+			credentials: 'include',
+	        body: article//JSON.stringify(article)
 		};
 
 		return new Promise((resolve, reject) => {

@@ -4,6 +4,7 @@ module.exports = {
 	login(username, password) {
 		const sendData = {
 				method: 'POST',
+				credentials: 'include',
 		        headers: new Headers({
 		          'Accept': 'application/json',
 		          'Content-Type': 'application/json'
@@ -15,7 +16,6 @@ module.exports = {
 			fetch(`${config.apiUrl}login`, sendData)
 				.then((response) => {
 					if(response.status === 200) {
-						localStorage.token = Math.random().toString(36).substring(7);
 						resolve();
 					} else {
 						throw new Error();
@@ -27,12 +27,27 @@ module.exports = {
 	},
 
 	logout() {
-		delete localStorage.token;
+		const sendData = {
+			method: 'POST',
+			credentials: 'include'
+		};
+
+		fetch(`${config.apiUrl}logout`, sendData)
+			.then((response) => {
+				if(response.status === 200) {
+					delete localStorage.token;
+				} else {
+					throw new Error();
+				}
+			}).catch((error) => {
+				console.log(error);
+			});
 	},
 
 	register(username, password) {
 		const sendData = {
 				method: 'POST',
+				credentials: 'include',
 		        headers: new Headers({
 		          'Accept': 'application/json',
 		          'Content-Type': 'application/json'
@@ -56,6 +71,14 @@ module.exports = {
 	},
 
 	loggedIn() {
-		return !!localStorage.token;
+		return fetch(`${config.apiUrl}loggedIn`, {
+			credentials: 'include'
+		})
+			.then((response) => {
+				return response.text();
+			}).then(data => data)
+			.catch((error) => {
+				return error;
+			});
 	}
 };

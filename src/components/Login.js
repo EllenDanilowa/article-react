@@ -8,10 +8,20 @@ class Login extends Component {
 
 		this.state = {
 			error: false,
-			loggedIn: AuthService.loggedIn()
+			loggedIn: false
 		}
 
 		this.login = this.login.bind(this);
+	}
+
+	componentDidMount() {
+
+		AuthService.loggedIn()
+        .then((data) => {
+            this.setState({
+              loggedIn: data === 'true'
+            }); 
+         });
 	}
 
 	login(event) {

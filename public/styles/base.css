@@ -30,3 +30,14 @@ body {
     text-align: center;
     padding: 8px 36px;
 }
+
+.link {
+    color: rgba(0,0,0,.44);
+    margin: 0 10px 0 0;
+    text-decoration: none;
+}
+.link:hover {
+    color: rgba(0,0,0,.6);
+}
+.icon {
+    color: rgba(0, 171, 107, 1);

@@ -9,7 +9,7 @@ class Articles extends Component {
         super();
         this.state = {
             articles: [],
-            loggedIn: AuthService.loggedIn()
+            loggedIn: false
         };
     }
 
@@ -21,6 +21,13 @@ class Articles extends Component {
                     articles: articles
                 });
             });
+
+        AuthService.loggedIn()
+        .then((data) => {
+            this.setState({
+              loggedIn: data === 'true'
+            }); 
+         })
     }
 
     render() {
@@ -30,23 +37,31 @@ class Articles extends Component {
               <Link to={'/login'}>Login</Link>
           ) : (
               <div>
-                  <Link to={'/new-article'}>Add new article</Link>
-                  <Link to={'/logout'}>Logout</Link>
+                  <Link className="link" to={'/new-article'}>Add new article</Link>
+                  <Link className="link" to={'/logout'}>Logout</Link>
               </div>
           )}
-          <h2 className="page-title">Last article</h2>
-          <ul className="article-list">
+          <h2 className="page-title">Last articles</h2>
+          <div className="article-list">
           {this.state.articles.map((article, index) => {
-            return <li className="article-list__item" key={index}>
+            return <div className="article-list__item" key={index}>
                 <h2 className="article-list__item__title">{article.title}</h2>
                  <p className="article-list__item__description">{article.description}</p>
-                      <a className="article-list__item__link" href={article.link}>Read more...</a>
-                      <img className="article-list__item__image" src='../uploads/{article.imageHash}' alt='alt' />
-                      <span className="article-list__item__author">{article.author}</span>
-                      <span className="article-list__item__date">{article.creation_date.toString()}</span>
-                </li>
+                      <a className="link article-list__item__link" href={article.link}>Read more...</a>
+                      <img className="article-list__item__image" src={"http://localhost:3001/uploads/"+article.imageHash} alt='alt' />
+                      <div className="article-list__item__additional-information">
+                          <span className="article-list__item__author">
+                              <i className="icon icon-user"></i>
+                              {article.author}
+                          </span>
+                          <span className="article-list__item__date">
+                              <i className="icon icon-clock"></i>
+                              {new Date(article.creation_date).toLocaleDateString()}
+                          </span>
+                      </div>
+                </div>
             })}
-          </ul>
+          </div>
         </div>
       );
     }
